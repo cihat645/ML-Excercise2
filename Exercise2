@@ -1,0 +1,130 @@
+
+%Code written in Octave
+% Machine Learning - Excercise 2
+% Thomas J. Ciha
+
+% We will:
+% 1) Implement Gradient Descent using a learning rate where alpha = .07
+% 2) Iterate Gradient Descent until theta converges
+% 3) Utilize the model to predict values based on the data set
+
+
+
+>> x = load('ex2x.dat');  %loading data into Octave from files
+>> y = load('ex2y.dat');
+>> figure   % opening a figure to plot data
+>> plot(x,y,'o'); % plotting data
+>> m = length(y)  % equating a variable 'm' to the number of training examples in this training set
+m =  50
+>> x = [ones(m,1),x]; % adding a column of 1's to vector x - this allows our regression line to have a y-intercept other than 0 (i.e., this way, the regression line is not required to pass through the origin)
+>> x    % displaying matrix x
+x =
+
+   1.0000   2.0659
+   1.0000   2.3684
+   1.0000   2.5400
+   1.0000   2.5421
+   1.0000   2.5491
+   1.0000   2.7867
+   1.0000   2.9117
+   1.0000   3.0356
+   1.0000   3.1147
+   1.0000   3.1582
+   1.0000   3.3276
+   1.0000   3.3793
+   1.0000   3.4122
+   1.0000   3.4216
+   1.0000   3.5316
+   1.0000   3.6393
+   1.0000   3.6733
+   1.0000   3.9256
+   1.0000   4.0499
+   1.0000   4.2483
+   1.0000   4.3440
+   1.0000   4.3827
+   1.0000   4.4231
+   1.0000   4.6102
+   1.0000   4.6881
+   1.0000   4.9777
+   1.0000   5.0360
+   1.0000   5.0685
+   1.0000   5.4161
+   1.0000   5.4396
+   1.0000   5.4563
+   1.0000   5.5698
+   1.0000   5.6016
+   1.0000   5.6878
+   1.0000   5.7216
+   1.0000   5.8539
+   1.0000   6.1978
+   1.0000   6.3511
+   1.0000   6.4797
+   1.0000   6.7384
+   1.0000   6.8638
+   1.0000   7.0223
+   1.0000   7.0782
+   1.0000   7.1514
+   1.0000   7.4664
+   1.0000   7.5974
+   1.0000   7.7441
+   1.0000   7.7730
+   1.0000   7.8265
+   1.0000   7.9306
+
+
+>> xlabel('Age in Years'); % labeling axes 
+>> ylabel('Height in meters');
+
+
+% Note: we only have two theta values here because there is only one feature in this model, Age. So the hypothesis prediction algorithm is: h(x) = theta(0) + theta(1) * x(1);
+% initalize theta values to zero
+>> theta(1) = theta(2) = 0
+>> theta
+theta =
+
+   0
+   0
+
+% 1) Running one iteration of gradient descent, we find what the values of theta(1) and theta(2) are
+% Note: theta(1) and theta(2) correspond to theta(0) and theta(1) in this model because Octave indexes vectors beginning with 1, not 0.
+>> temptheta1 = theta(1) - .07 * (1/m) * ((x * theta)-y)' * x(:,1)
+temptheta1 =  0.074528
+>> temptheta2 = theta(2) - .07 * (1/m) * ((x * theta) - y)' * x(:,2)
+temptheta2 =  0.38002
+>> theta(1) = temptheta1
+theta =
+
+   0.074528
+   0.000000
+
+>> theta(2) = temptheta2
+theta =
+
+   0.074528
+   0.380022
+
+
+
+>> % 2) now we will iterate an update algorithm to update all each theta simultaneously
+>> iterations = 1600
+iterations =  1600
+>> for i = 2:1600
+theta = theta - ((1/m) * ((x * theta) - y)' * x)' * .07;
+end
+>> theta
+theta =
+
+   0.750157
+   0.063882
+
+>> hold on
+>> plot(x(:,2),x*theta, '-')
+>> legend('Training Data', 'Linear regression')
+
+% 3) Predict the height of two boys, one of them being 3.5 years old and the other 7 years old.
+
+>> boy1 = .750163 + .063881*3.5
+boy1 =  0.97375
+>> boy2 = .750163 + .063881*7
+boy2 =  1.1973
+
