@@ -18,7 +18,7 @@ p = zeros(m, 1);
 
 %your job here is to create a prediction algorithm 
 
-hyp = X * theta; %(returns a mx1 matrix_type
+hyp = sigmoid(X * theta); %(returns a mx1 matrix_type
 
 predict_1 = find(hyp >= .5);
 p(predict_1) = 1;
