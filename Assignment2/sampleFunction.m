@@ -1,0 +1,1 @@
+function [value] = sampleFunction(a)value = a + 5end
